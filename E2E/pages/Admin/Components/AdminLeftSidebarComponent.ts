@@ -109,11 +109,9 @@ export class AdminLeftSideBarComponent extends BaseAdminComponent {
 		this.healthCheckButton = this.page.getByRole("link", { name: "Health Check" });
 
 		// === Admin profile ===
-		this.adminUserButton = this.page.locator(
-			".flex items-center cursor-pointer group space-x-3 rounded-md p-2 hover:bg-gray-100 dark:hover:bg-gray-800",
-		);
-		this.adminProfileButton = this.page.getByRole("link", { name: "Profile" });
-		this.signOutButton = this.page.getByRole("link", { name: "Sign out" });
+		this.adminUserButton = this.page.getByRole("generic", { name: "Profile" });
+		this.adminProfileButton = this.page.getByRole("menuitem", { name: "Profile" });
+		this.signOutButton = this.page.getByRole("menuitem", { name: "Sign out" });
 	}
 
 	// === Sidebar toggle ===

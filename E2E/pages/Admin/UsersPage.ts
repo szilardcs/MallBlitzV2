@@ -8,7 +8,7 @@ export class UsersPage extends BasePage {
 	protected readonly exportAsCSV: Locator;
 	protected readonly downloadImportTemplate: Locator;
 	protected readonly importButton: Locator;
-	protected readonly addUserButton: Locator; // TODO: new page
+	protected readonly addUserButton: Locator;
 
 	// === Table management ===
 	protected readonly searchField: Locator;
@@ -118,10 +118,10 @@ export class UsersPage extends BasePage {
 		// === Pagination ===
 		this.paginationWrapper = this.page.locator(".flex items-center justify-between pt-4");
 		this.rowsPerPageCombo = this.paginationWrapper.getByRole("combobox");
-		this.paginationFirstPageButton = this.paginationWrapper.getByRole("button").first();
-		this.paginationLastPageButton = this.paginationWrapper.getByRole("button").last();
-		this.paginationNextPageButton = this.paginationWrapper.getByRole("button").nth(2);
-		this.paginationPreviousPageButton = this.paginationWrapper.getByRole("button").nth(1);
+		this.paginationFirstPageButton = this.paginationWrapper.getByRole("button", { name: "Go to first page" });
+		this.paginationNextPageButton = this.paginationWrapper.getByRole("button", { name: "Go to previous page" });
+		this.paginationPreviousPageButton = this.paginationWrapper.getByRole("button", { name: "Go to next page" });
+		this.paginationLastPageButton = this.paginationWrapper.getByRole("button", { name: "Go to last page" });
 	}
 
 	async verifyPage(): Promise<void> {

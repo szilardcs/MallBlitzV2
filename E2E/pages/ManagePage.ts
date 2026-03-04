@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test";
 import { AdminHeaderComponent } from "./Admin/Components/AdminHeaderComponent";
 import { AdminLeftSideBarComponent } from "./Admin/Components/AdminLeftSidebarComponent";
+import { UserCreatePage } from "./Admin/UserCreatePage";
 import { UsersPage } from "./Admin/UsersPage";
 import { BlogPage } from "./BlogPage";
 import { FooterComponent } from "./components/FooterComponent";
@@ -41,6 +42,7 @@ export default class ManagePage {
 	private _adminHeader?: AdminHeaderComponent;
 	private _adminSideBar?: AdminLeftSideBarComponent;
 	private _usersPage?: UsersPage;
+	private _userCreatePage?: UserCreatePage;
 
 	get dashboardPage(): DashboardPage {
 		return (this._dashboard ??= new DashboardPage(this.page));
@@ -116,5 +118,9 @@ export default class ManagePage {
 
 	get usersPage(): UsersPage {
 		return (this._usersPage ??= new UsersPage(this.page));
+	}
+
+	get userCreatePage(): UserCreatePage {
+		return (this._userCreatePage ??= new UserCreatePage(this.page));
 	}
 }
