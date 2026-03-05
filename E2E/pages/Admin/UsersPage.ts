@@ -1,6 +1,30 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "../BasePage";
 
+enum FilterSelectOperator {
+	Equals = "Equals",
+	Contains = "Contains",
+	DoesNotContain = "Does not contain",
+	StartsWith = "Starts with",
+	EndsWith = "Ends with",
+	IsEmpty = "Is empty",
+	IsNotEmpty = "Is not empty",
+	Between = "Between",
+	IsToday = "Is today",
+	IsThisWeek = "Is this week",
+	IsThisMonth = "Is this month",
+	IsThisYear = "Is this year",
+	LastNDays = "Last N days",
+}
+
+enum FilterSelectField {
+	Name = "Name",
+	Email = "Email",
+	VerificationStatus = "Verification Status",
+	Role = "Role",
+	CreatedDate = "Created Date",
+}
+
 export class UsersPage extends BasePage {
 	// === User Management ===
 	protected readonly exportButton: Locator;
@@ -22,9 +46,11 @@ export class UsersPage extends BasePage {
 	// - Filter -
 	protected readonly filterWrapper: Locator;
 	protected readonly filterButton: Locator;
-	protected readonly filterSelectField: Locator;
-	protected readonly filterSelectOperator: Locator;
+	protected readonly filterSelectFieldDropdown: Locator;
+	protected readonly filterSelectOperatorDropdown: Locator;
 	protected readonly filterValueField: Locator;
+	protected readonly filterMinDateField: Locator;
+	protected readonly filterMaxDateField: Locator;
 	protected readonly filterAddNewFilter: Locator;
 	protected readonly filterClear: Locator;
 	protected readonly filterApply: Locator;
@@ -85,9 +111,11 @@ export class UsersPage extends BasePage {
 		// - Filter -
 		this.filterWrapper = this.page.locator(".w-full max-w-4xl");
 		this.filterButton = this.page.getByRole("button", { name: "Filter" });
-		this.filterSelectField = this.filterWrapper.getByRole("combobox").first();
-		this.filterSelectOperator = this.filterWrapper.getByRole("combobox").nth(1);
+		this.filterSelectFieldDropdown = this.filterWrapper.getByRole("combobox").first();
+		this.filterSelectOperatorDropdown = this.filterWrapper.getByRole("combobox").nth(1);
 		this.filterValueField = this.filterWrapper.getByRole("combobox").first();
+		this.filterMinDateField = this.filterWrapper.locator('[placeholder="Min"]');
+		this.filterMaxDateField = this.filterWrapper.locator('[placeholder="Max"]');
 		this.filterAddNewFilter = this.filterWrapper.getByRole("button", { name: "Add additional filter" });
 		this.filterClear = this.filterWrapper.getByRole("button", { name: "Clear" });
 		this.filterApply = this.filterWrapper.getByRole("button", { name: "Apply" });
@@ -127,4 +155,29 @@ export class UsersPage extends BasePage {
 	async verifyPage(): Promise<void> {
 		await expect(this.page).toHaveURL("https://mallblitz.com/admin/users");
 	}
+
+	async enterSearchQuery(query: string): Promise<void> {
+		await this.searchField.fill(query);
+	}
+
+	async performUserAction(action: "Mark as verified" | "Mark as unverified" | "Delete Selected"): Promise<void> {
+		await this.actionsButton.click();
+		if (action === "Mark as verified") {
+			await this.markAsUnverifiedButton.click();
+		} else if (action === "Mark as unverified") {
+			await this.markAsUnverifiedButton.click();
+		} else if (action === "Delete Selected") {
+			await this.deleteSelectedButton.click();
+		}
+	}
+
+	private async filterSelectFiled(field: FilterSelectField) {
+		await this.filterSelectFieldDropdown.selectOption(field);
+	}
+
+	private async filterSelectOperator(operator: FilterSelectOperator) {
+		await this.filterSelectOperatorDropdown.selectOption(operator);
+	}
+
+	async applyFilter(): Promise<void> {}
 }
