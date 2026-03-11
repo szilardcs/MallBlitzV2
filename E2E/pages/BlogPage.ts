@@ -28,7 +28,7 @@ export class BlogPage extends BasePage {
 
 	// === Search ===
 	async fillSearchField(query: string): Promise<void> {
-		await this.page.waitForLoadState("networkidle");
+		await this.page.waitForLoadState("networkidle"); // for nuxt app hydration
 		await this.searchField.click();
 		await expect(this.searchField).toBeInViewport();
 		await this.searchField.fill(query);

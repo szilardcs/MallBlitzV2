@@ -1,6 +1,6 @@
 import { expect, Page } from "@playwright/test";
 
-async function expectColumnOrdered(values: any[], direction: "asc" | "desc") {
+async function expectColumnOrdered(values: any[], direction: "asc" | "desc"): Promise<void> {
 	for (let i = 0; i < values.length - 1; i++) {
 		const current = values[i];
 		const next = values[i + 1];
@@ -14,7 +14,7 @@ async function expectColumnOrdered(values: any[], direction: "asc" | "desc") {
 }
 
 // === ID ===
-export async function expectCoulmnIDToBeSorted(page: Page, direction: "asc" | "desc") {
+export async function expectColumnIDToBeSorted(page: Page, direction: "asc" | "desc"): Promise<void> {
 	const values = await page.locator("tbody tr td:nth-child(1)").allInnerTexts();
 	const normalized = values.map((v) => Number(v.trim()));
 
@@ -22,7 +22,7 @@ export async function expectCoulmnIDToBeSorted(page: Page, direction: "asc" | "d
 }
 
 // === User ===
-export async function expectColumnUserToBeSorted(page: Page, direction: "asc" | "desc") {
+export async function expectColumnUserToBeSorted(page: Page, direction: "asc" | "desc"): Promise<void> {
 	const values = await page.locator("tbody tr td:nth-child(2)").allInnerTexts();
 	const normalized = values.map((v) => v.trim().toLowerCase());
 
@@ -37,7 +37,7 @@ const statusRank = {
 
 type StatusKey = keyof typeof statusRank;
 
-export async function expectColumnStatusToBeSorted(page: Page, direction: "asc" | "desc") {
+export async function expectColumnStatusToBeSorted(page: Page, direction: "asc" | "desc"): Promise<void> {
 	const values = await page.locator("tbody tr td:nth-child(4)").allInnerTexts();
 	const normalized = values.map((v) => {
 		const status = v.trim().toLowerCase() as StatusKey;
@@ -48,7 +48,7 @@ export async function expectColumnStatusToBeSorted(page: Page, direction: "asc" 
 }
 
 // === Join date ===
-export async function expectColumnJoinDateToBeSorted(page: Page, direction: "asc" | "desc") {
+export async function expectColumnJoinDateToBeSorted(page: Page, direction: "asc" | "desc"): Promise<void> {
 	const values = await page.locator("tbody tr td:nth-child(5)").allInnerTexts();
 
 	const normalized = values.map((v) => {
