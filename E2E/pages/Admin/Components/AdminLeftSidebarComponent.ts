@@ -66,7 +66,7 @@ export class AdminLeftSideBarComponent extends BaseAdminComponent {
 		this.dashboardButton = this.page.getByRole("link", { name: "Dashboard" });
 
 		// === Inbox ===
-		this.inboxButton = this.page.locator(".nav-item").filter({ hasText: "Inbox" });
+		this.inboxButton = this.page.getByRole("link").filter({ hasText: "Inbox" });
 
 		// === Users ===
 		this.usersButton = this.page.getByRole("link", { name: "Users" });
